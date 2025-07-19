@@ -8,35 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Cherry Blossom Theme - Light Mode */
+    --background: 350 50% 98%;
+    --foreground: 220 20% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 350 30% 96%;
+    --card-foreground: 220 20% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 350 30% 96%;
+    --popover-foreground: 220 20% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Cherry Blossom Pink as Primary */
+    --primary: 345 85% 85%;
+    --primary-foreground: 220 30% 20%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Light Blue as Secondary */
+    --secondary: 200 50% 88%;
+    --secondary-foreground: 220 30% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 350 20% 93%;
+    --muted-foreground: 220 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 200 40% 85%;
+    --accent-foreground: 220 30% 20%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 350 50% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 350 20% 88%;
+    --input: 350 20% 90%;
+    --ring: 345 85% 75%;
 
-    --radius: 0.5rem;
+    /* Custom Cherry Blossom Variables */
+    --blossom-pink: 345 85% 85%;
+    --blossom-pink-light: 345 70% 92%;
+    --blossom-blue: 200 50% 88%;
+    --blossom-blue-light: 200 40% 95%;
+    --glass-bg: 350 50% 98% / 0.8;
+    --glass-border: 345 40% 85% / 0.3;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--blossom-pink)), hsl(var(--blossom-blue)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--glass-bg)), hsl(var(--blossom-pink-light)));
+    --gradient-hero: linear-gradient(180deg, hsl(var(--background)), hsl(var(--blossom-pink-light)));
+
+    /* Shadows */
+    --shadow-blossom: 0 8px 32px hsl(var(--blossom-pink) / 0.2);
+    --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.15);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
