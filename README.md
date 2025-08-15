@@ -1,73 +1,103 @@
-# Welcome to your Lovable project
+# Blossom Bloom Portfolio
 
-## Project info
+A beautiful, modern portfolio website built with React, TypeScript, and Tailwind CSS, featuring a cherry blossom theme and glass morphism design.
 
-**URL**: https://lovable.dev/projects/a8aef044-8d20-4db0-810b-ac2114922ad7
+## 🌸 Features
 
-## How can I edit this code?
+- **Modern Design**: Clean, responsive design with cherry blossom aesthetics
+- **Glass Morphism**: Beautiful glass card effects throughout the interface
+- **Responsive**: Fully responsive design that works on all devices
+- **TypeScript**: Built with TypeScript for better code quality
+- **Tailwind CSS**: Styled with Tailwind CSS for consistent design
+- **Vite**: Fast development and build times with Vite
 
-There are several ways of editing your application.
+## 🚀 Getting Started
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a8aef044-8d20-4db0-810b-ac2114922ad7) and start prompting.
+- Node.js (version 16 or higher)
+- npm or yarn
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd blossom-bloom-portfolio
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. Install dependencies:
+```bash
+npm install
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📁 Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/            # Base UI components (shadcn/ui)
+│   └── sections/      # Page sections (Hero, About, Projects, etc.)
+├── assets/            # Images and static assets
+├── hooks/             # Custom React hooks
+├── lib/               # Utility functions and configurations
+└── pages/             # Page components
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🛠️ Available Scripts
 
-## What technologies are used for this project?
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-This project is built with:
+## 🎨 Customization
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Colors and Theme
+The portfolio uses a custom cherry blossom color palette. You can modify the colors in `tailwind.config.ts`.
 
-## How can I deploy this project?
+### Content
+Update the content in the respective section components:
+- `HeroSection.tsx` - Main hero section
+- `AboutSection.tsx` - About me section
+- `ProjectsSection.tsx` - Projects showcase
+- `EducationSection.tsx` - Education and experience
+- `ContactSection.tsx` - Contact information
 
-Simply open [Lovable](https://lovable.dev/projects/a8aef044-8d20-4db0-810b-ac2114922ad7) and click on Share -> Publish.
+## 📱 Responsive Design
 
-## Can I connect a custom domain to my Lovable project?
+The portfolio is fully responsive and optimized for:
+- Desktop (1200px+)
+- Tablet (768px - 1199px)
+- Mobile (320px - 767px)
 
-Yes, you can!
+## 🚀 Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Build for Production
+```bash
+npm run build
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Deploy to Vercel/Netlify
+1. Push your code to GitHub
+2. Connect your repository to Vercel or Netlify
+3. Deploy automatically on push
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+Built with ❤️ using React, TypeScript, and Tailwind CSS

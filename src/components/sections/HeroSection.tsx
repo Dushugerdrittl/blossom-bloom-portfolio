@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import GlassCard from '@/components/GlassCard';
 import { ArrowDown, Github, Linkedin, Mail, Phone } from 'lucide-react';
+import profilePhoto from '@/assets/profile-photo.jpg';
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -16,8 +17,23 @@ const HeroSection = () => {
             <div className="space-y-6">
               <div className="relative inline-block">
                 <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-primary p-1">
-                  <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-6xl font-bold text-primary">
-                    N
+                  <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                    {/* Your profile photo from assets folder */}
+                    <img 
+                      src={profilePhoto} 
+                      alt="Nithin Sai Koushik Kancharla"
+                      className="w-full h-full object-cover rounded-full"
+                      onError={(e) => {
+                        // Fallback to "N" if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    {/* Fallback "N" - hidden by default, shows if image fails */}
+                    <div className="text-6xl font-bold text-primary hidden">
+                      N
+                    </div>
                   </div>
                 </div>
               </div>
