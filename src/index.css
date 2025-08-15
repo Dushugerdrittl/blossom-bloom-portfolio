@@ -7,6 +7,10 @@ All colors MUST be HSL.
 */
 
 @layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+
   :root {
     /* Cherry Blossom Theme - Light Mode */
     --background: 350 50% 98%;
