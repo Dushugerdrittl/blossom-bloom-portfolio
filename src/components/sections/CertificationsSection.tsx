@@ -11,7 +11,8 @@ const CertificationsSection = () => {
       period: '2024 - 2025',
       description: 'Comprehensive course on ChatGPT applications across various software fields, covering AI automation, integration strategies, and practical implementations in customer support, coding assistance, and data analysis.',
       skills: ['ChatGPT', 'AI Integration', 'Automation', 'Prompt Engineering'],
-      status: 'Completed'
+      status: 'Completed',
+      certificateUrl: '/certificates/chatgpt-certificate.pdf'
     },
     {
       title: 'Full Stack Development (Java)',
@@ -19,7 +20,8 @@ const CertificationsSection = () => {
       period: '2023 - 2024',
       description: 'Intensive internship program covering full stack web development with Java, including frontend technologies (HTML, CSS, JavaScript), backend development, database management, and responsive design.',
       skills: ['Java', 'HTML', 'CSS', 'JavaScript', 'Database', 'UI/UX'],
-      status: 'Completed'
+      status: 'Completed',
+      certificateUrl: '/certificate?cert=/certificates/fullstack-java-certificate.jpg&title=Full Stack Development (Java) Internship'
     },
     {
       title: 'AI/ML and Data Science',
@@ -27,7 +29,8 @@ const CertificationsSection = () => {
       period: '2023 - 2024',
       description: 'Advanced training in Artificial Intelligence and Machine Learning, focusing on predictive modeling, feature engineering, and data processing techniques for real-world applications.',
       skills: ['Python', 'Machine Learning', 'Data Science', 'Predictive Modeling', 'Feature Engineering'],
-      status: 'Completed'
+      status: 'Completed',
+      certificateUrl: '/certificate?cert=/certificates/henotic-aiml-certificate.jpg&title=AI/ML and Data Science Internship'
     }
   ];
 
@@ -88,10 +91,12 @@ const CertificationsSection = () => {
                     ))}
                   </div>
 
-                  <Button variant="outline" size="sm" className="w-full gap-2">
-                    <ExternalLink className="w-4 h-4" />
-                    View Certificate
-                  </Button>
+                  <a href={cert.certificateUrl} target="_blank" rel="noopener noreferrer" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full gap-2">
+                      <ExternalLink className="w-4 h-4" />
+                      View Certificate
+                    </Button>
+                  </a>
                 </div>
               </div>
             </GlassCard>
