@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import GlassCard from '@/components/GlassCard';
-import { ArrowDown, Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Mail, Phone, Download } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.jpg';
 
 const HeroSection = () => {
@@ -46,11 +46,17 @@ const HeroSection = () => {
                   Full Stack Developer & AI/ML Enthusiast
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Fresher • Computer Science & Business Systems
+                  Computer Science & Business Systems Graduate
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center gap-4 mt-8">
+                <a href="/resume.pdf" download="Nithin_Sai_Koushik_Resume.pdf">
+                  <Button size="lg" className="gap-2">
+                    <Download className="w-4 h-4" />
+                    Download Resume
+                  </Button>
+                </a>
                 <a href="tel:+919701106539">
                   <Button variant="outline" size="lg" className="gap-2">
                     <Phone className="w-4 h-4" />
@@ -63,13 +69,13 @@ const HeroSection = () => {
                     Email
                   </Button>
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/kancharla-nithin-sai-koushik-786124286" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="lg" className="gap-2">
                     <Linkedin className="w-4 h-4" />
                     LinkedIn
                   </Button>
                 </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Dushugerdrittl" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="lg" className="gap-2">
                     <Github className="w-4 h-4" />
                     GitHub

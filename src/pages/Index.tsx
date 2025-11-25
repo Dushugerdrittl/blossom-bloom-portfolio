@@ -3,6 +3,7 @@ import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import EducationSection from '@/components/sections/EducationSection';
+import CertificationsSection from '@/components/sections/CertificationsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import cherryBlossomBg from '@/assets/cherry-blossom-bg.jpg';
 import Navbar from '@/components/Navbar';
@@ -33,12 +34,13 @@ const Index = () => {
         <AboutSection />
         <ProjectsSection />
         <EducationSection />
+        <CertificationsSection />
         <ContactSection />
       </div>
       
       {/* Footer */}
       <footer className="relative z-10 py-8 text-center text-muted-foreground bg-background/80 backdrop-blur-sm">
-        <p>&copy; 2024 Nithin Sai Koushik Kancharla. Built with React & Cherry Blossom Dreams 🌸</p>
+        <p>&copy; 2025 Nithin Sai Koushik Kancharla. Built with React & Cherry Blossom Dreams 🌸</p>
       </footer>
 
       {/* Back to Top */}

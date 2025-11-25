@@ -1,16 +1,18 @@
 import GlassCard from '@/components/GlassCard';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import { Code, Database, Smartphone, Brain, Users, Target } from 'lucide-react';
 
 const AboutSection = () => {
   const techStack = [
-    { name: 'Flutter', icon: Smartphone },
-    { name: 'HTML', icon: Code },
-    { name: 'CSS', icon: Code },
-    { name: 'JavaScript', icon: Code },
-    { name: 'Java', icon: Code },
-    { name: 'AI/ML', icon: Brain },
-    { name: 'Data Analytics', icon: Database },
+    { name: 'Flutter', icon: Smartphone, level: 89 },
+    { name: 'HTML', icon: Code, level: 90 },
+    { name: 'CSS', icon: Code, level: 97 },
+    { name: 'JavaScript', icon: Code, level: 80 },
+    { name: 'Java', icon: Code, level: 69 },
+    { name: 'Python', icon: Code, level: 80 },
+    { name: 'Generative AI', icon: Brain, level: 97 },
+    { name: 'Data Analytics', icon: Database, level: 75 },
   ];
 
   const softSkills = [
@@ -74,11 +76,17 @@ const AboutSection = () => {
               <Code className="w-6 h-6" />
               Technical Skills
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {techStack.map((tech, index) => (
-                <div key={tech.name} className="flex items-center gap-3 p-3 rounded-lg bg-white/50 hover:bg-white/70 transition-colors">
-                  <tech.icon className="w-5 h-5 text-primary" />
-                  <span className="font-medium">{tech.name}</span>
+                <div key={tech.name} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <tech.icon className="w-5 h-5 text-primary" />
+                      <span className="font-medium">{tech.name}</span>
+                    </div>
+                    <span className="text-sm text-muted-foreground">{tech.level}%</span>
+                  </div>
+                  <Progress value={tech.level} className="h-2" />
                 </div>
               ))}
             </div>

@@ -6,6 +6,7 @@ const sectionLinks: Array<{ id: string; label: string }> = [
 	{ id: 'about', label: 'About' },
 	{ id: 'projects', label: 'Projects' },
 	{ id: 'education', label: 'Education' },
+	{ id: 'certifications', label: 'Certifications' },
 	{ id: 'contact', label: 'Contact' },
 ];
 
