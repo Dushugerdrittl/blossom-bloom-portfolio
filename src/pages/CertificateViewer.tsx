@@ -12,6 +12,7 @@ const CertificateViewer = () => {
   
   const certificatePath = searchParams.get('cert');
   const title = searchParams.get('title') || 'Certificate';
+  const isPdf = certificatePath?.toLowerCase().endsWith('.pdf');
 
   useEffect(() => {
     // Prevent scroll on body when viewer is open
@@ -29,7 +30,8 @@ const CertificateViewer = () => {
     if (certificatePath) {
       const link = document.createElement('a');
       link.href = certificatePath;
-      link.download = `${title.replace(/\s+/g, '_')}.jpg`;
+      const extension = certificatePath.split('.').pop() || 'jpg';
+      link.download = `${title.replace(/\s+/g, '_')}.${extension}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -96,12 +98,22 @@ const CertificateViewer = () => {
         <div className="max-w-6xl w-full">
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-4 md:p-8">
             <div className="overflow-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
-              <img
-                src={certificatePath}
-                alt={title}
-                className="w-full h-auto rounded-lg transition-transform duration-300"
-                style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'center top' }}
-              />
+              {isPdf ? (
+                <embed
+                  src={certificatePath}
+                  type="application/pdf"
+                  width="100%"
+                  height="600px"
+                  className="rounded-lg"
+                />
+              ) : (
+                <img
+                  src={certificatePath}
+                  alt={title}
+                  className="w-full h-auto rounded-lg transition-transform duration-300"
+                  style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'center top' }}
+                />
+              )}
             </div>
           </div>
         </div>

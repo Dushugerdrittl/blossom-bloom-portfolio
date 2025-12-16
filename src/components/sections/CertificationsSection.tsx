@@ -12,7 +12,7 @@ const CertificationsSection = () => {
       description: 'Comprehensive course on ChatGPT applications across various software fields, covering AI automation, integration strategies, and practical implementations in customer support, coding assistance, and data analysis.',
       skills: ['ChatGPT', 'AI Integration', 'Automation', 'Prompt Engineering'],
       status: 'Completed',
-      certificateUrl: '/certificates/chatgpt-certificate.pdf'
+      certificateUrl: '/certificate?cert=/certificates/chatgpt-certificate.pdf&title=ChatGPT Course'
     },
     {
       title: 'Full Stack Development (Java)',
