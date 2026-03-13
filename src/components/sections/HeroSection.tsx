@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import GlassCard from '@/components/GlassCard';
 import { ArrowDown, Github, Linkedin, Mail, Phone, Download } from 'lucide-react';
-import profilePhoto from '@/assets/profile-photo.jpg';
+import profilePhoto from '@/assets/profile-photo.png';
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {

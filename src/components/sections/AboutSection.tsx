@@ -1,5 +1,6 @@
 import GlassCard from '@/components/GlassCard';
 import { User, Code2, Rocket, Heart, Sparkles } from 'lucide-react';
+import TechMarquee from '../TechMarquee';
 
 const AboutSection = () => {
   return (
@@ -78,6 +79,9 @@ const AboutSection = () => {
               </GlassCard>
             </div>
           </div>
+          
+          {/* Step 5: Infinite Tech Stack Marquee */}
+          <TechMarquee />
           
         </div>
       </div>

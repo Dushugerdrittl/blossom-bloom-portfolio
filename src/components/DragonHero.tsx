@@ -1,22 +1,28 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, Environment, ContactShadows, useAnimations } from '@react-three/drei';
+import { useGLTF, Environment, ContactShadows, useAnimations, Center } from '@react-three/drei';
 import { useRef, Suspense, useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
+import { MeshoptDecoder } from 'meshoptimizer';
+import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
 import CanvasLoader from './CanvasLoader';
 
 function AnimatedDragon() {
-  // Step 1: Load the high-detail model
-  const { scene, animations } = useGLTF('/dragon.glb');
+  // Loading the compressed model with Meshopt decoder
+  const { scene, animations } = useGLTF('/dragon.glb', false, true, (loader) => {
+    loader.setMeshoptDecoder(MeshoptDecoder);
+  });
+  
   const dragonRef = useRef<THREE.Group>(null);
+  const containerRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
   
-  // Step 2: Extract animation tools
+  // Extract animation tools
   const { names, actions, mixer } = useAnimations(animations, dragonRef);
   
-  // Step 3: Track animation index
+  // Track animation index
   const [index, setIndex] = useState(0);
 
-  // Step 4 & 5: Handle animation playback and looping
+  // Handle animation playback and looping
   useEffect(() => {
     if (names.length === 0 || !actions) return;
 
@@ -24,14 +30,12 @@ function AnimatedDragon() {
     const action = actions[name];
 
     if (action) {
-      // Configure for sequential playback
       action.reset();
       action.setLoop(THREE.LoopOnce, 1);
       action.clampWhenFinished = true;
       action.fadeIn(0.5).play();
     }
 
-    // Step 6: Listen for 'finished' event to cycle index
     const handleFinished = () => {
       setIndex((prev) => (prev + 1) % names.length);
     };
@@ -44,55 +48,58 @@ function AnimatedDragon() {
     };
   }, [index, names, actions, mixer]);
 
-  // Reduced responsive scale
+  // Dynamic scale calculation
   const baseResponsiveScale = useMemo(() => {
     const baseScale = 3.5; 
     const scaleFactor = Math.max(viewport.width / 12, 0.8); 
     return baseScale * scaleFactor;
   }, [viewport.width]);
 
-  // Step 7: Keep heavy mouse tracking lerp
   useFrame((state) => {
-    if (dragonRef.current) {
+    if (dragonRef.current && containerRef.current) {
       const time = state.clock.getElapsedTime();
       const { x, y } = state.pointer;
 
-      // Biological movements (Levitation & Sway)
-      // Base Y lowered to -2.0 to sit on the 'ground'
-      const baseGroundY = -2.0;
-      dragonRef.current.position.y = baseGroundY + Math.sin(time * 1.2) * 0.1;
-      const swayZ = Math.sin(time * 0.8) * 0.03;
-
-      // Heavy Mouse Tracking - Clamped to prevent going too far
-      const baseRotationY = time * 0.05; 
-      const targetRotationX = THREE.MathUtils.clamp(-y * 0.3, -0.4, 0.4);
-      const targetRotationY = baseRotationY + (x * 0.5);
-
-      dragonRef.current.rotation.x = THREE.MathUtils.lerp(dragonRef.current.rotation.x, targetRotationX, 0.02);
-      dragonRef.current.rotation.y = THREE.MathUtils.lerp(dragonRef.current.rotation.y, targetRotationY, 0.02);
-      dragonRef.current.rotation.z = THREE.MathUtils.lerp(dragonRef.current.rotation.z, swayZ + (x * 0.05), 0.02);
+      // 1. POSITIONING & LEVITATION
+      // We lower the container to the 'ground' and add subtle bobbing
+      const baseGroundY = -2.5;
+      containerRef.current.position.y = baseGroundY + Math.sin(time * 1.0) * 0.1;
       
-      // Breathing scale applied to base scale
-      const breathe = 1 + Math.sin(time * 2) * 0.015;
+      // 2. STABLE ROTATION (Mouse Tracking)
+      // We remove the infinite Y rotation to keep it stable in frame
+      // Instead, we use a controlled 'Look At' behavior
+      const targetRotationX = THREE.MathUtils.clamp(-y * 0.4, -0.5, 0.5);
+      const targetRotationY = THREE.MathUtils.clamp(x * 0.6, -0.8, 0.8);
+      const swayZ = Math.sin(time * 0.5) * 0.02;
+
+      // Smoothly interpolate the rotation
+      dragonRef.current.rotation.x = THREE.MathUtils.lerp(dragonRef.current.rotation.x, targetRotationX, 0.03);
+      dragonRef.current.rotation.y = THREE.MathUtils.lerp(dragonRef.current.rotation.y, targetRotationY, 0.03);
+      dragonRef.current.rotation.z = THREE.MathUtils.lerp(dragonRef.current.rotation.z, swayZ + (x * 0.05), 0.03);
+      
+      // 3. BREATHING EFFECT
+      const breathe = 1 + Math.sin(time * 2) * 0.01;
       const finalScale = baseResponsiveScale * breathe;
       dragonRef.current.scale.set(finalScale, finalScale, finalScale);
     }
   });
 
   return (
-    <primitive 
-      ref={dragonRef} 
-      object={scene} 
-      position={[0, -0.5, 0]}
-    />
+    <group ref={containerRef}>
+      <Center top>
+        <primitive 
+          ref={dragonRef} 
+          object={scene} 
+        />
+      </Center>
+    </group>
   );
 }
 
 export default function DragonHero() {
   return (
     <div className="fixed inset-0 z-0 w-screen h-screen overflow-hidden bg-[#050505]">
-      <Canvas shadows camera={{ position: [0, 0, 15], fov: 35 }}>
-        {/* Step 1: Wrap in Suspense */}
+      <Canvas shadows camera={{ position: [0, 0, 18], fov: 30, far: 100 }}>
         <Suspense fallback={<CanvasLoader />}>
           <Environment preset="night" />
           
@@ -101,10 +108,21 @@ export default function DragonHero() {
           <ContactShadows 
             position={[0, -3.5, 0]} 
             opacity={0.4} 
-            scale={15} 
+            scale={20} 
             blur={2.5} 
-            far={4} 
+            far={10} 
           />
+
+          <EffectComposer disableNormalPass>
+            <Bloom 
+              luminanceThreshold={1} 
+              mipmapBlur 
+              intensity={1.2} 
+              radius={0.4} 
+            />
+            <Vignette eskil={false} offset={0.1} darkness={1.1} />
+            <Noise opacity={0.04} />
+          </EffectComposer>
         </Suspense>
 
         <ambientLight intensity={0.5} />
@@ -123,4 +141,6 @@ export default function DragonHero() {
 }
 
 // Preload for performance
-useGLTF.preload('/dragon.glb');
+useGLTF.preload('/dragon.glb', false, true, (loader) => {
+  loader.setMeshoptDecoder(MeshoptDecoder);
+});

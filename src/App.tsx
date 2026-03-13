@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CertificateViewer from "./pages/CertificateViewer";
 import DegreeCertificates from "./pages/DegreeCertificates";
+import CustomCursor from "./components/CustomCursor";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       {/* Universal Luxury UI Elements */}
+      <CustomCursor />
       <div className="luxury-border" />
       <Toaster />
       <Sonner />
