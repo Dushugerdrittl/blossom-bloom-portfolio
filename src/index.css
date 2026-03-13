@@ -2,119 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
 	html {
 		scroll-behavior: smooth;
 	}
 
   :root {
-    /* Cherry Blossom Theme - Light Mode */
-    --background: 350 50% 98%;
-    --foreground: 220 20% 15%;
+    /* Ultra-Premium Obsidian & Metallic Gold Theme */
+    --background: 0 0% 2%; /* #050505 */
+    --foreground: 45 10% 96%; /* #F9F6EE Champagne */
 
-    --card: 350 30% 96%;
-    --card-foreground: 220 20% 15%;
+    --card: 0 0% 2% / 0.3;
+    --card-foreground: 45 10% 96%;
 
-    --popover: 350 30% 96%;
-    --popover-foreground: 220 20% 15%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 45 10% 96%;
 
-    /* Cherry Blossom Pink as Primary */
-    --primary: 345 85% 85%;
-    --primary-foreground: 220 30% 20%;
+    --primary: 45 60% 52%; /* #D4AF37 Metallic Gold */
+    --primary-foreground: 0 0% 2%;
 
-    /* Light Blue as Secondary */
-    --secondary: 200 50% 88%;
-    --secondary-foreground: 220 30% 20%;
+    --secondary: 45 60% 52% / 0.1;
+    --secondary-foreground: 45 60% 52%;
 
-    --muted: 350 20% 93%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 45 10% 70%;
 
-    --accent: 200 40% 85%;
-    --accent-foreground: 220 30% 20%;
+    --accent: 45 60% 52% / 0.2;
+    --accent-foreground: 45 60% 52%;
 
-    --destructive: 0 75% 60%;
-    --destructive-foreground: 350 50% 98%;
-
-    --border: 350 20% 88%;
-    --input: 350 20% 90%;
-    --ring: 345 85% 75%;
-
-    /* Custom Cherry Blossom Variables */
-    --blossom-pink: 345 85% 85%;
-    --blossom-pink-light: 345 70% 92%;
-    --blossom-blue: 200 50% 88%;
-    --blossom-blue-light: 200 40% 95%;
-    --glass-bg: 350 50% 98% / 0.8;
-    --glass-border: 345 40% 85% / 0.3;
-
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--blossom-pink)), hsl(var(--blossom-blue)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--glass-bg)), hsl(var(--blossom-pink-light)));
-    --gradient-hero: linear-gradient(180deg, hsl(var(--background)), hsl(var(--blossom-pink-light)));
-
-    /* Shadows */
-    --shadow-blossom: 0 8px 32px hsl(var(--blossom-pink) / 0.2);
-    --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.15);
-
-    --radius: 1rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 45 60% 52% / 0.2;
+    --input: 45 60% 52% / 0.2;
+    --ring: 45 60% 52%;
+
+    --glass-bg: 0 0% 2% / 0.3;
+    --glass-border: 45 60% 52% / 0.2;
+
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, #D4AF37, #F9F6EE, #D4AF37);
+    --gradient-card: linear-gradient(145deg, rgba(5, 5, 5, 0.3), rgba(212, 175, 55, 0.05));
+
+    --radius: 0.75rem;
   }
 }
 
@@ -124,6 +54,28 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden antialiased;
+    background-color: #050505;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-[#D4AF37] font-bold tracking-tight;
+  }
+}
+
+.luxury-border {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid #D4AF37;
+  pointer-events: none;
+  z-index: 9999;
+  box-sizing: border-box;
+  opacity: 0.6;
+}
+
+.glass-panel {
+  @apply bg-black/30 backdrop-blur-md border border-[#D4AF37]/20 rounded-2xl shadow-2xl;
 }

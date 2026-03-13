@@ -1,110 +1,84 @@
 import GlassCard from '@/components/GlassCard';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Code, Database, Smartphone, Brain, Users, Target } from 'lucide-react';
+import { User, Code2, Rocket, Heart, Sparkles } from 'lucide-react';
 
 const AboutSection = () => {
-  const techStack = [
-    { name: 'Flutter', icon: Smartphone, level: 89 },
-    { name: 'HTML', icon: Code, level: 90 },
-    { name: 'CSS', icon: Code, level: 97 },
-    { name: 'JavaScript', icon: Code, level: 80 },
-    { name: 'Java', icon: Code, level: 69 },
-    { name: 'Python', icon: Code, level: 80 },
-    { name: 'Generative AI', icon: Brain, level: 97 },
-    { name: 'Data Analytics', icon: Database, level: 75 },
-  ];
-
-  const softSkills = [
-    'Effective Communication',
-    'Team Collaboration', 
-    'Problem-Solving',
-    'Project Management'
-  ];
-
   return (
-    <section id="about" className="py-20 relative">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            About Me
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Detail-oriented and innovative Full Stack Developer with a passion for creating efficient solutions
-          </p>
-        </div>
+    <section id="about" className="py-24 relative">
+      <div className="container mx-auto px-4 flex flex-col items-center">
+        {/* Universal Container Width for Symmetry */}
+        <div className="w-full max-w-5xl flex flex-col gap-12">
+          
+          <div className="text-center animate-fade-in-up">
+            <h2 className="text-4xl md:text-6xl font-black text-[#D4AF37] mb-6 tracking-tighter drop-shadow-[0_0_15px_rgba(212,175,55,0.3)] uppercase">
+              About Me
+            </h2>
+            <div className="w-24 h-[1px] bg-[#D4AF37] mx-auto mb-6 opacity-50"></div>
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          <GlassCard hover className="animate-scale-in">
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-primary flex items-center gap-2">
-                <Users className="w-6 h-6" />
-                Professional Background
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Detail-oriented and innovative Full Stack Developer and Android Developer (mid-level) with a 
-                strong educational foundation in computer science and business systems. Skilled in Python, 
-                Java, HTML, CSS, and Flutter, with a passion for harnessing technology to drive business growth.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Experienced in optimizing algorithms and developing AI-driven models through academic projects. 
-                Eager to contribute technical expertise and creativity to enhance software development initiatives 
-                in a collaborative environment.
-              </p>
-            </div>
-          </GlassCard>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+            <div className="md:col-span-7 space-y-8 animate-fade-in-up">
+              <GlassCard className="border-l-4 border-l-[#D4AF37]">
+                <div className="flex items-center gap-3 mb-4">
+                  <User className="text-[#D4AF37] w-6 h-6" />
+                  <h3 className="text-2xl font-bold text-[#D4AF37]">My Story</h3>
+                </div>
+                <p className="text-lg text-[#F9F6EE]/90 leading-relaxed font-light">
+                  I am a passionate <span className="text-[#D4AF37] font-semibold">Computer Science & Business Systems</span> graduate 
+                  with a mission to build high-performance software that solves real-world problems. 
+                  My journey is driven by a deep fascination with how technology intersects with 
+                  business logic to create meaningful value.
+                </p>
+                <p className="text-lg text-[#F9F6EE]/90 leading-relaxed mt-4 font-light">
+                  From architecting complex <span className="text-[#D4AF37] font-semibold">Full Stack</span> applications 
+                  to exploring the frontiers of <span className="text-[#D4AF37] font-semibold">AI/ML</span>, I am always 
+                  pushing the boundaries of what's possible with code.
+                </p>
+              </GlassCard>
 
-          <GlassCard hover className="animate-scale-in" style={{ animationDelay: '0.2s' }}>
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-primary flex items-center gap-2">
-                <Target className="w-6 h-6" />
-                Location & Contact
-              </h3>
-              <div className="space-y-3 text-muted-foreground">
-                <p>📍 521135, Movva, Krishna District</p>
-                <p>📍 Andhra Pradesh, India</p>
-                <p>📞 +91 97011 06539</p>
-                <p>✉️ nithinsaikancharla@gmail.com</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <GlassCard className="flex flex-col items-center text-center py-8">
+                  <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center mb-4">
+                    <Code2 className="text-[#D4AF37] w-6 h-6" />
+                  </div>
+                  <h4 className="text-[#D4AF37] font-bold mb-2">Modern Stack</h4>
+                  <p className="text-[#F9F6EE]/70 text-sm italic">React, Node.js, TypeScript</p>
+                </GlassCard>
+
+                <GlassCard className="flex flex-col items-center text-center py-8">
+                  <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center mb-4">
+                    <Rocket className="text-[#D4AF37] w-6 h-6" />
+                  </div>
+                  <h4 className="text-[#D4AF37] font-bold mb-2">Fast Learner</h4>
+                  <p className="text-[#F9F6EE]/70 text-sm italic">Always adapting to new tech</p>
+                </GlassCard>
               </div>
             </div>
-          </GlassCard>
-        </div>
 
-        <div className="mt-12 space-y-8">
-          <GlassCard hover className="animate-scale-in" style={{ animationDelay: '0.4s' }}>
-            <h3 className="text-2xl font-semibold text-primary mb-6 flex items-center gap-2">
-              <Code className="w-6 h-6" />
-              Technical Skills
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {techStack.map((tech, index) => (
-                <div key={tech.name} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <tech.icon className="w-5 h-5 text-primary" />
-                      <span className="font-medium">{tech.name}</span>
-                    </div>
-                    <span className="text-sm text-muted-foreground">{tech.level}%</span>
-                  </div>
-                  <Progress value={tech.level} className="h-2" />
+            <div className="md:col-span-5 space-y-6">
+              <GlassCard className="h-full border-r-4 border-r-[#D4AF37]">
+                <div className="flex items-center gap-3 mb-6">
+                  <Sparkles className="text-[#D4AF37] w-6 h-6" />
+                  <h3 className="text-2xl font-bold text-[#D4AF37]">My Values</h3>
                 </div>
-              ))}
+                <ul className="space-y-6">
+                  {[
+                    { title: "Quality First", desc: "Writing clean, maintainable, and scalable code." },
+                    { title: "Continuous Growth", desc: "Learning something new every single day." },
+                    { title: "Problem Solver", desc: "Approaching challenges with a solution-oriented mindset." }
+                  ].map((val, i) => (
+                    <li key={i} className="group">
+                      <h4 className="text-[#D4AF37] font-bold flex items-center gap-2">
+                        <Heart className="w-4 h-4 text-[#D4AF37] opacity-40 group-hover:opacity-100 transition-opacity" />
+                        {val.title}
+                      </h4>
+                      <p className="text-[#F9F6EE]/70 text-sm mt-1">{val.desc}</p>
+                    </li>
+                  ))}
+                </ul>
+              </GlassCard>
             </div>
-          </GlassCard>
-
-          <GlassCard hover className="animate-scale-in" style={{ animationDelay: '0.6s' }}>
-            <h3 className="text-2xl font-semibold text-primary mb-6 flex items-center gap-2">
-              <Users className="w-6 h-6" />
-              Soft Skills
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {softSkills.map((skill, index) => (
-                <Badge key={skill} variant="secondary" className="text-sm py-2 px-4">
-                  {skill}
-                </Badge>
-              ))}
-            </div>
-          </GlassCard>
+          </div>
+          
         </div>
       </div>
     </section>

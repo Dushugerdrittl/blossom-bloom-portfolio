@@ -8,13 +8,15 @@ interface GlassCardProps {
   style?: React.CSSProperties;
 }
 
-const GlassCard = ({ children, className, hover = false, style }: GlassCardProps) => {
+const GlassCard = ({ children, className, hover = true, style }: GlassCardProps) => {
   return (
     <div
       className={cn(
-        "relative backdrop-blur-glass border border-white/20 rounded-2xl p-8",
-        "bg-gradient-card shadow-glass",
-        hover && "transition-all duration-300 hover:shadow-blossom hover:scale-105",
+        // Universal Card Styling
+        "w-full bg-black/30 backdrop-blur-md border border-[#D4AF37]/30 rounded-xl p-6",
+        // Universal Golden Glow & Hover
+        "shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300",
+        hover && "hover:shadow-[0_0_25px_rgba(212,175,55,0.7)] hover:scale-[1.01] hover:border-[#D4AF37]/50",
         className
       )}
       style={style}

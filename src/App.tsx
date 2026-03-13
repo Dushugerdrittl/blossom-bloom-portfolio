@@ -13,14 +13,16 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      {/* Universal Luxury UI Elements */}
+      <div className="luxury-border" />
       <Toaster />
       <Sonner />
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/certificate" element={<CertificateViewer />} />
           <Route path="/degree-certificates" element={<DegreeCertificates />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
