@@ -63,9 +63,9 @@ function AnimatedDragon() {
     };
   }, [index, names, actions, mixer]);
 
-  // Dynamic scale calculation - Increased to 3.8 for extra majesty
+  // Dynamic scale calculation - Increased to 4.0 for extra majesty
   const baseResponsiveScale = useMemo(() => {
-    const baseScale = 3.8; 
+    const baseScale = 4.0; 
     const scaleFactor = Math.min(viewport.width / 15, 1); 
     return baseScale * scaleFactor;
   }, [viewport.width]);
