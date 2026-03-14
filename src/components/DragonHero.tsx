@@ -2,15 +2,11 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment, ContactShadows, useAnimations, Center } from '@react-three/drei';
 import { useRef, Suspense, useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
-import { MeshoptDecoder } from 'meshoptimizer';
 import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
 import CanvasLoader from './CanvasLoader';
 
 function AnimatedDragon() {
-  // Loading the compressed model with Meshopt decoder
-  const { scene, animations } = useGLTF('/dragon.glb', false, true, (loader) => {
-    loader.setMeshoptDecoder(MeshoptDecoder);
-  });
+  const { scene, animations } = useGLTF('/dragon.glb');
   
   const dragonRef = useRef<THREE.Group>(null);
   const containerRef = useRef<THREE.Group>(null);
@@ -141,6 +137,4 @@ export default function DragonHero() {
 }
 
 // Preload for performance
-useGLTF.preload('/dragon.glb', false, true, (loader) => {
-  loader.setMeshoptDecoder(MeshoptDecoder);
-});
+useGLTF.preload('/dragon.glb');
