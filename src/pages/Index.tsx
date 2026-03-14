@@ -42,7 +42,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="relative z-10 py-12 text-center text-[#D4AF37]/80 bg-black/60 backdrop-blur-xl border-t border-[#D4AF37]/20">
         <p className="tracking-widest uppercase text-sm font-medium">
-          &copy; 2025 Nithin Sai Koushik Kancharla. Crafted in Obsidian & Gold.
+          &copy; 2026 Nithin Sai Koushik Kancharla. 666 as above so below
         </p>
       </footer>
 

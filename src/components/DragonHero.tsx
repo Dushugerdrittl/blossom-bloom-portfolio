@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, Environment, ContactShadows, useAnimations, Center } from '@react-three/drei';
+import { useGLTF, Environment, ContactShadows, useAnimations, Center, Sparkles } from '@react-three/drei';
 import { useRef, Suspense, useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
@@ -18,6 +18,26 @@ function AnimatedDragon() {
   // Track animation index
   const [index, setIndex] = useState(0);
 
+  // Debug and fix model parts
+  useEffect(() => {
+    // Log bounding box to help determine scale
+    const box = new THREE.Box3().setFromObject(scene);
+    const size = box.getSize(new THREE.Vector3());
+    console.log("Model Size:", size);
+
+    scene.traverse((child) => {
+      if ((child as any).isMesh) {
+        const mesh = child as THREE.Mesh;
+        mesh.frustumCulled = false;
+        
+        if (mesh.material) {
+          const mat = mesh.material as THREE.Material;
+          mat.side = THREE.DoubleSide;
+        }
+      }
+    });
+  }, [scene]);
+
   // Handle animation playback and looping
   useEffect(() => {
     if (names.length === 0 || !actions) return;
@@ -27,8 +47,7 @@ function AnimatedDragon() {
 
     if (action) {
       action.reset();
-      action.setLoop(THREE.LoopOnce, 1);
-      action.clampWhenFinished = true;
+      // Removed LoopOnce to let it play naturally or loop as defined in the model
       action.fadeIn(0.5).play();
     }
 
@@ -44,10 +63,10 @@ function AnimatedDragon() {
     };
   }, [index, names, actions, mixer]);
 
-  // Dynamic scale calculation
+  // Dynamic scale calculation - Increased to 3.8 for extra majesty
   const baseResponsiveScale = useMemo(() => {
-    const baseScale = 3.5; 
-    const scaleFactor = Math.max(viewport.width / 12, 0.8); 
+    const baseScale = 3.8; 
+    const scaleFactor = Math.min(viewport.width / 15, 1); 
     return baseScale * scaleFactor;
   }, [viewport.width]);
 
@@ -56,24 +75,21 @@ function AnimatedDragon() {
       const time = state.clock.getElapsedTime();
       const { x, y } = state.pointer;
 
-      // 1. POSITIONING & LEVITATION
-      // We lower the container to the 'ground' and add subtle bobbing
-      const baseGroundY = -2.5;
-      containerRef.current.position.y = baseGroundY + Math.sin(time * 1.0) * 0.1;
+      // 1. POSITIONING - Bottom Center
+      // Raised further from -3.0 to -1.5 to bring it more into the main view
+      const baseGroundY = -1.5; 
+      containerRef.current.position.y = baseGroundY + Math.sin(time * 0.5) * 0.2;
       
-      // 2. STABLE ROTATION (Mouse Tracking)
-      // We remove the infinite Y rotation to keep it stable in frame
-      // Instead, we use a controlled 'Look At' behavior
-      const targetRotationX = THREE.MathUtils.clamp(-y * 0.4, -0.5, 0.5);
-      const targetRotationY = THREE.MathUtils.clamp(x * 0.6, -0.8, 0.8);
+      // 2. CONTROLLED ROTATION
+      const targetRotationX = THREE.MathUtils.clamp(-y * 0.2, -0.3, 0.3);
+      const targetRotationY = THREE.MathUtils.clamp(x * 0.4, -0.5, 0.5);
       const swayZ = Math.sin(time * 0.5) * 0.02;
 
-      // Smoothly interpolate the rotation
       dragonRef.current.rotation.x = THREE.MathUtils.lerp(dragonRef.current.rotation.x, targetRotationX, 0.03);
       dragonRef.current.rotation.y = THREE.MathUtils.lerp(dragonRef.current.rotation.y, targetRotationY, 0.03);
-      dragonRef.current.rotation.z = THREE.MathUtils.lerp(dragonRef.current.rotation.z, swayZ + (x * 0.05), 0.03);
+      dragonRef.current.rotation.z = THREE.MathUtils.lerp(dragonRef.current.rotation.z, swayZ + (x * 0.03), 0.03);
       
-      // 3. BREATHING EFFECT
+      // 3. BREATHING
       const breathe = 1 + Math.sin(time * 2) * 0.01;
       const finalScale = baseResponsiveScale * breathe;
       dragonRef.current.scale.set(finalScale, finalScale, finalScale);
@@ -82,12 +98,19 @@ function AnimatedDragon() {
 
   return (
     <group ref={containerRef}>
-      <Center top>
-        <primitive 
-          ref={dragonRef} 
-          object={scene} 
-        />
-      </Center>
+      <group>
+        {/* We only Center the dragon so the sparkles don't mess up the bounding box */}
+        <Center bottom>
+          <primitive 
+            ref={dragonRef} 
+            object={scene} 
+          />
+        </Center>
+        
+        {/* Majestic Aura Sparkles - Positioned relative to the dragon but ignored by Center */}
+        <Sparkles count={70} scale={15} size={10} speed={0.3} color="#D4AF37" />
+        <Sparkles count={50} scale={12} size={8} speed={0.5} color="#FF69B4" />
+      </group>
     </group>
   );
 }
@@ -102,7 +125,7 @@ export default function DragonHero() {
           <AnimatedDragon />
 
           <ContactShadows 
-            position={[0, -3.5, 0]} 
+            position={[0, -6.5, 0]} 
             opacity={0.4} 
             scale={20} 
             blur={2.5} 

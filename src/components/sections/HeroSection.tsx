@@ -21,7 +21,7 @@ const HeroSection = () => {
                     <img 
                       src={profilePhoto} 
                       alt="Nithin Sai Koushik Kancharla"
-                      className="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-700"
+                      className="w-full h-full object-cover rounded-full transition-all duration-700"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';

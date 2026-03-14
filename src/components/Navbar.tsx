@@ -37,7 +37,7 @@ export default function Navbar() {
             className="text-2xl font-black tracking-tighter text-[#D4AF37] hover:scale-110 transition-transform" 
             onClick={() => navigateTo('about')}
           >
-            Nova_Stella
+            Nova_Stella 🎀
           </button>
 					
           <nav className="hidden md:flex items-center gap-1">
