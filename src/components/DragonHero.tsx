@@ -2,11 +2,25 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment, ContactShadows, useAnimations, Center, Sparkles } from '@react-three/drei';
 import { useRef, Suspense, useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
+import { MeshoptDecoder } from 'meshoptimizer';
 import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
 import CanvasLoader from './CanvasLoader';
 
 function AnimatedDragon() {
-  const { scene, animations } = useGLTF('/dragon.glb');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const modelPath = isMobile ? '/dragon-lite.glb' : '/dragon-hq.glb';
+  
+  // Use MeshoptDecoder for the compressed lite model
+  const { scene, animations } = useGLTF(modelPath, false, true, (loader) => {
+    loader.setMeshoptDecoder(MeshoptDecoder);
+  });
   
   const dragonRef = useRef<THREE.Group>(null);
   const containerRef = useRef<THREE.Group>(null);
@@ -18,20 +32,21 @@ function AnimatedDragon() {
   // Track animation index
   const [index, setIndex] = useState(0);
 
-  // Step 3: Mobile Detection for Framerate Capping
-  const isMobile = useMemo(() => window.innerWidth < 768, []);
+  // Step 3: Mobile Detection for Framerate Capping (uses state from above)
   let frameCount = 0;
 
-  // Debug and fix model parts
+  // Fix and optimize model meshes
   useEffect(() => {
     scene.traverse((child) => {
-      if ((child as any).isMesh) {
-        const mesh = child as THREE.Mesh;
-        mesh.frustumCulled = false; 
+      if (child instanceof THREE.Mesh) {
+        child.frustumCulled = false; 
         
-        if (mesh.material) {
-          const mat = mesh.material as THREE.Material;
-          mat.side = THREE.DoubleSide;
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach(m => m.side = THREE.DoubleSide);
+          } else {
+            child.material.side = THREE.DoubleSide;
+          }
         }
       }
     });
@@ -41,15 +56,21 @@ function AnimatedDragon() {
   useEffect(() => {
     if (names.length === 0 || !actions) return;
 
+    // Get current animation name
     const name = names[index];
     const action = actions[name];
 
     if (action) {
+      // Configure the action to play once and then signal 'finished'
       action.reset();
+      action.setLoop(THREE.LoopOnce, 1);
+      action.clampWhenFinished = true;
       action.fadeIn(0.5).play();
     }
 
+    // Set up the listener for when an animation finishes
     const handleFinished = () => {
+      // Fade out current and move to next index
       setIndex((prev) => (prev + 1) % names.length);
     };
 
@@ -172,5 +193,8 @@ export default function DragonHero() {
   );
 }
 
-// Preload for performance
-useGLTF.preload('/dragon.glb');
+// Step 7: Preload Both Assets
+useGLTF.preload('/dragon-hq.glb');
+useGLTF.preload('/dragon-lite.glb', false, true, (loader) => {
+  loader.setMeshoptDecoder(MeshoptDecoder);
+});
