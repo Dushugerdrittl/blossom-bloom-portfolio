@@ -20,15 +20,10 @@ function AnimatedDragon() {
 
   // Debug and fix model parts
   useEffect(() => {
-    // Log bounding box to help determine scale
-    const box = new THREE.Box3().setFromObject(scene);
-    const size = box.getSize(new THREE.Vector3());
-    console.log("Model Size:", size);
-
     scene.traverse((child) => {
       if ((child as any).isMesh) {
         const mesh = child as THREE.Mesh;
-        mesh.frustumCulled = false;
+        mesh.frustumCulled = false; // Step 1: Disable frustum culling
         
         if (mesh.material) {
           const mat = mesh.material as THREE.Material;
@@ -47,7 +42,6 @@ function AnimatedDragon() {
 
     if (action) {
       action.reset();
-      // Removed LoopOnce to let it play naturally or loop as defined in the model
       action.fadeIn(0.5).play();
     }
 
@@ -76,7 +70,6 @@ function AnimatedDragon() {
       const { x, y } = state.pointer;
 
       // 1. POSITIONING - Bottom Center
-      // Raised further from -3.0 to -1.5 to bring it more into the main view
       const baseGroundY = -1.5; 
       containerRef.current.position.y = baseGroundY + Math.sin(time * 0.5) * 0.2;
       
@@ -107,9 +100,9 @@ function AnimatedDragon() {
           />
         </Center>
         
-        {/* Majestic Aura Sparkles - Positioned relative to the dragon but ignored by Center */}
-        <Sparkles count={70} scale={15} size={10} speed={0.3} color="#D4AF37" />
-        <Sparkles count={50} scale={12} size={8} speed={0.5} color="#FF69B4" />
+        {/* Step 2: frustumCulled={false} on Sparkles */}
+        <Sparkles count={70} scale={15} size={10} speed={0.3} color="#D4AF37" frustumCulled={false} />
+        <Sparkles count={50} scale={12} size={8} speed={0.5} color="#FF69B4" frustumCulled={false} />
       </group>
     </group>
   );
@@ -117,7 +110,8 @@ function AnimatedDragon() {
 
 export default function DragonHero() {
   return (
-    <div className="fixed inset-0 z-0 w-screen h-screen overflow-hidden bg-[#050505]">
+    /* Step 3 & 4 & 5: h-[100dvh], pointer-events-none, and -z-10 */
+    <div className="fixed inset-0 -z-10 w-screen h-[100dvh] overflow-hidden bg-[#050505] pointer-events-none">
       <Canvas shadows camera={{ position: [0, 0, 18], fov: 30, far: 100 }}>
         <Suspense fallback={<CanvasLoader />}>
           <Environment preset="night" />

@@ -19,7 +19,7 @@ const Index = () => {
       <Navbar />
 
       {/* 3D Dragon Hero Background */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 -z-10">
         <DragonHero />
       </div>
       
