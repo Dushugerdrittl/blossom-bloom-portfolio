@@ -97,24 +97,24 @@ function AnimatedDragon() {
     }
 
     if (dragonRef.current && containerRef.current) {
-      const time = state.clock.getElapsedTime();
       const { x, y } = state.pointer;
+      const t = state.clock.getElapsedTime();
 
       // 1. POSITIONING - Bottom Center
       const baseGroundY = -1.5; 
-      containerRef.current.position.y = baseGroundY + Math.sin(time * 0.5) * 0.2;
+      containerRef.current.position.y = baseGroundY + Math.sin(t * 0.5) * 0.2;
       
       // 2. CONTROLLED ROTATION
       const targetRotationX = THREE.MathUtils.clamp(-y * 0.2, -0.3, 0.3);
       const targetRotationY = THREE.MathUtils.clamp(x * 0.4, -0.5, 0.5);
-      const swayZ = Math.sin(time * 0.5) * 0.02;
+      const swayZ = Math.sin(t * 0.5) * 0.02;
 
       dragonRef.current.rotation.x = THREE.MathUtils.lerp(dragonRef.current.rotation.x, targetRotationX, 0.03);
       dragonRef.current.rotation.y = THREE.MathUtils.lerp(dragonRef.current.rotation.y, targetRotationY, 0.03);
       dragonRef.current.rotation.z = THREE.MathUtils.lerp(dragonRef.current.rotation.z, swayZ + (x * 0.03), 0.03);
       
       // 3. BREATHING
-      const breathe = 1 + Math.sin(time * 2) * 0.01;
+      const breathe = 1 + Math.sin(t * 2) * 0.01;
       const finalScale = baseResponsiveScale * breathe;
       dragonRef.current.scale.set(finalScale, finalScale, finalScale);
     }
@@ -123,6 +123,7 @@ function AnimatedDragon() {
   return (
     <group ref={containerRef}>
       <group>
+        {/* We only Center the dragon so the sparkles don't mess up the bounding box */}
         <Center bottom>
           <primitive 
             ref={dragonRef} 
@@ -130,6 +131,7 @@ function AnimatedDragon() {
           />
         </Center>
         
+        {/* Majestic Aura Sparkles - Positioned relative to the dragon but ignored by Center */}
         <Sparkles count={70} scale={15} size={10} speed={0.3} color="#D4AF37" frustumCulled={false} />
         <Sparkles count={50} scale={12} size={8} speed={0.5} color="#FF69B4" frustumCulled={false} />
       </group>
