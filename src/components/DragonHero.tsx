@@ -18,12 +18,16 @@ function AnimatedDragon() {
   // Track animation index
   const [index, setIndex] = useState(0);
 
+  // Step 3: Mobile Detection for Framerate Capping
+  const isMobile = useMemo(() => window.innerWidth < 768, []);
+  let frameCount = 0;
+
   // Debug and fix model parts
   useEffect(() => {
     scene.traverse((child) => {
       if ((child as any).isMesh) {
         const mesh = child as THREE.Mesh;
-        mesh.frustumCulled = false; // Step 1: Disable frustum culling
+        mesh.frustumCulled = false; 
         
         if (mesh.material) {
           const mat = mesh.material as THREE.Material;
@@ -65,6 +69,12 @@ function AnimatedDragon() {
   }, [viewport.width]);
 
   useFrame((state) => {
+    // Step 3: Cap Framerate on Mobile (approx. 30fps)
+    if (isMobile) {
+      frameCount++;
+      if (frameCount % 2 !== 0) return;
+    }
+
     if (dragonRef.current && containerRef.current) {
       const time = state.clock.getElapsedTime();
       const { x, y } = state.pointer;
@@ -92,7 +102,6 @@ function AnimatedDragon() {
   return (
     <group ref={containerRef}>
       <group>
-        {/* We only Center the dragon so the sparkles don't mess up the bounding box */}
         <Center bottom>
           <primitive 
             ref={dragonRef} 
@@ -100,7 +109,6 @@ function AnimatedDragon() {
           />
         </Center>
         
-        {/* Step 2: frustumCulled={false} on Sparkles */}
         <Sparkles count={70} scale={15} size={10} speed={0.3} color="#D4AF37" frustumCulled={false} />
         <Sparkles count={50} scale={12} size={8} speed={0.5} color="#FF69B4" frustumCulled={false} />
       </group>
@@ -110,9 +118,20 @@ function AnimatedDragon() {
 
 export default function DragonHero() {
   return (
-    /* Step 3 & 4 & 5: h-[100dvh], pointer-events-none, and -z-10 */
-    <div className="fixed inset-0 -z-10 w-screen h-[100dvh] overflow-hidden bg-[#050505] pointer-events-none">
-      <Canvas shadows camera={{ position: [0, 0, 18], fov: 30, far: 100 }}>
+    /* Step 4: Wrapper absolute/fixed prevents scrolling interference */
+    <div className="fixed inset-0 -z-10 h-[100dvh] w-screen pointer-events-none overflow-hidden bg-[#050505]">
+      {/* Step 1 & 2: Lock Pixel Ratio (dpr) and Optimize WebGL Engine (gl) */}
+      <Canvas 
+        shadows 
+        dpr={[1, 1]}
+        gl={{ 
+          powerPreference: "high-performance", 
+          antialias: false, 
+          stencil: false, 
+          depth: true 
+        }}
+        camera={{ position: [0, 0, 18], fov: 30, far: 100 }}
+      >
         <Suspense fallback={<CanvasLoader />}>
           <Environment preset="night" />
           
