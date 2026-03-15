@@ -138,47 +138,56 @@ function AnimatedDragon() {
 }
 
 export default function DragonHero() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     /* Step 4: Wrapper absolute/fixed prevents scrolling interference */
     <div className="fixed inset-0 -z-10 h-[100dvh] w-screen pointer-events-none overflow-hidden bg-[#050505]">
       {/* Step 1 & 2: Lock Pixel Ratio (dpr) and Optimize WebGL Engine (gl) */}
       <Canvas 
-        shadows 
-        dpr={[1, 1]}
+        shadows={!isMobile} // Disable shadows on mobile for stability
+        dpr={isMobile ? 1 : [1, 2]} // Allow higher quality on desktop, lock to 1 on mobile
         gl={{ 
           powerPreference: "high-performance", 
-          antialias: false, 
+          antialias: !isMobile, // Disable antialiasing on mobile
           stencil: false, 
-          depth: true 
+          depth: true,
+          alpha: false,
+          preserveDrawingBuffer: false
         }}
         camera={{ position: [0, 0, 18], fov: 30, far: 100 }}
       >
         <Suspense fallback={<CanvasLoader />}>
-          <Environment preset="night" />
+          <Environment preset={isMobile ? "city" : "night"} />
           
           <AnimatedDragon />
 
-          <ContactShadows 
-            position={[0, -6.5, 0]} 
-            opacity={0.4} 
-            scale={20} 
-            blur={2.5} 
-            far={10} 
-          />
-
-          <EffectComposer disableNormalPass>
-            <Bloom 
-              luminanceThreshold={1} 
-              mipmapBlur 
-              intensity={1.2} 
-              radius={0.4} 
+          {!isMobile && (
+            <ContactShadows 
+              position={[0, -6.5, 0]} 
+              opacity={0.4} 
+              scale={20} 
+              blur={2.5} 
+              far={10} 
             />
+          )}
+
+          <EffectComposer disableNormalPass multisampling={isMobile ? 0 : 8}>
+            {/* Conditional Bloom: Only if not mobile or very low intensity */}
+            {!isMobile && (
+              <Bloom 
+                luminanceThreshold={1} 
+                mipmapBlur 
+                intensity={1.2} 
+                radius={0.4} 
+              />
+            )}
             <Vignette eskil={false} offset={0.1} darkness={1.1} />
-            <Noise opacity={0.04} />
+            {!isMobile && <Noise opacity={0.04} />}
           </EffectComposer>
         </Suspense>
 
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={isMobile ? 0.8 : 0.5} />
         <pointLight position={[10, 10, 10]} intensity={2} color="#FFCC00" />
         <spotLight 
           position={[-10, 10, 10]} 
